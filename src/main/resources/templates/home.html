@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Home</title>
+    </head>
+    <body>
+        <h1>Home</h1>
+
+        <h2>今日(<span th:text="${today}"></span>)</h2>
+        <p>合計勉強時間：<span th:th:text="${totalMinutes}"></span> 分</p>
+
+        <hr>
+
+        <h2>タイマー</h2>
+        <p id="timer">0:00:00</p>
+        <button type="button" onclick="startTimer()">開始</button>
+        <button type="button" onclick="stopTimer()">停止</button>
+
+        <h2>ログ登録</h2>
+        <form th:action="@{/home/log}" th:object="${studyLog}" method="post">
+            <input type="hidden" th:field="*{studyDate}">
+            <input type="hidden" th:field="*{minutes}" id="minutesInput">
+
+            <div>
+                <label>メモ</label>
+                <input type="text" th:field="*{subject}">
+            </div>
+
+            <div>
+                <label>メモ</label>
+                <textarea th:field="*{memo}" rows="3" cols="40"></textarea>
+            </div>
+
+            <p>計測結果(分)：<span id="minutesPreview">0</span></p>
+
+            <button type="submit">保存</button>
+
+            <hr>
+
+            <h2>今日の科目・内容</h2>
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>日付</th>
+                        <th>科目</th>
+                        <th>分</th>
+                        <th>メモ</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="log : ${todayLogs}">
+                        <td th:text="${log.studyDate}"></td>
+                        <td th:text="${log.subject}"></td>
+                        <td th:text="${log.minutes}"></td>
+                        <td th:text="${log.memo}"></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <script>
+                let startMs = null;
+                let intervalId = null;
+
+                function format(ms) {
+                    const totalSec = Math.floor(ms / 1000);
+                    const h = String(Math.floor(totalSec / 3600)).padStart(2, '0');
+                    const m = String(Math.floor((totalSec % 3600) / 60)).padStart(2, '0');
+                    const s = String(totalSec % 60).padStart(2, '0');
+                    return `${h}:${m}:${s}`; 
+                }
+
+                function startTimer() {
+                    if (intervalId) return;
+                    startMs = Date.now();
+                    intervalId = setInterval(() => {
+                        const elapsed = Date.now() - startMs;
+                        document.getElementById('timer').textContent = format(elapsed);
+                    }, 200);
+                }
+
+                function stopTimer() {
+                    if(!intervalId) return;
+                    clearInterval(intervalId);
+                    intervalId = null;
+
+                    const elapsedMs = Date.now() - startMs;
+                    const minutes = Math.max(0, Math.floor(elapsedMs / 60000));
+                    document.getElementById('minutesInput').value = minutes;
+                    document.getElementById('minutesPreview').textContent = minutes;
+                }
+            </script>
+        </form>
+    </body>
+</html>
