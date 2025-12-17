@@ -1,0 +1,28 @@
+.layout{
+    display: flex;
+    gap: 24px;
+}
+
+.content{
+    flex: 1;
+}
+
+.sidebar{
+    background: #fff;
+    border: 1px solid #e6e8ee;
+    border-radius: 12px;
+    padding: 16px;
+    box-shadow: 0 8px 24px rgba(0,0,0,.08);
+    width: 280px;
+}
+
+.sidebar .menu a{
+    display: block;
+    padding: 10px 12px;
+    border-radius: 10px;
+    text-decoration: none;
+}
+
+.sidebar .menu a:hover{
+    background: #f3f5f9;
+}

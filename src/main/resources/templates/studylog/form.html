@@ -2,35 +2,42 @@
 <html xmlns:th="http://www.thymeleaf.org">
     <head>
         <meta charset="UTF-8">
+        <link rel="stylesheet" th:href="@{/css/home.css}">
+        <link rel="stylesheet" th:href="@{/css/sidebar.css}">
         <title>勉強ログ登録</title>
     </head>
     <body>
-        <h1>勉強ログ登録</h1>
+        <div class="layout">
+            <main class="content">
+                <h1>勉強ログ登録</h1>
 
-        <form th:action="@{/studylogs}" th:object="${studyLog}" method="post">
-            <div>
-                <label>日付</label>
-                <input type="date" th:field="*{studyDate}">
-            </div>
+                <form th:action="@{/studylogs}" th:object="${studyLog}" method="post">
+                    <div>
+                        <label>日付</label>
+                        <input type="date" th:field="*{studyDate}">
+                    </div>
 
-            <div>
-                <label>科目</label>
-                <input type="text" th:field="*{subject}">
-            </div>
+                    <div>
+                        <label>科目</label>
+                        <input type="text" th:field="*{subject}">
+                    </div>
 
-            <div>
-                <label>時間(分)</label>
-                <input type="number" th:field="*{minutes}" min="0">
-            </div>
+                    <div>
+                        <label>時間(分)</label>
+                        <input type="number" th:field="*{minutes}" min="0">
+                    </div>
 
-            <div>
-                <label>メモ</label>
-                <textarea th:field="*{memo}" rows="4" cols="40"></textarea>
-            </div>
+                    <div>
+                        <label>メモ</label>
+                        <textarea th:field="*{memo}" rows="4" cols="40"></textarea>
+                    </div>
 
-            <button type="submit">登録</button>
-        </form>
+                    <button type="submit">登録</button>
+                </form>
 
-        <p><a th:href="@{/studylogs}">一覧へ</a></p>
+                <p><a th:href="@{/studylogs}">一覧へ</a></p>
+            </main>
+            <aside th:replace="fragments/sidebar :: sidebar"></aside>
+        </div>
     </body>
 </html>        
