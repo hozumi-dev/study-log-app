@@ -1,79 +1,73 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <meta charset="UTF-8">
-        <link rel="stylesheet" th:href="@{/css/home.css}">
-        <link rel="stylesheet" th:href="@{/css/sidebar.css}">
-        <title>Home</title>
-    </head>
-    <body>
-        <div class="layout">
-            <main class="content">
-                <h1>Home</h1>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="fragments/base :: layout('Home', ~{::main}, ~{::scripts})">
+    <main>
+        <h1>Home</h1>
 
-                <h2>今日(<span th:text="${today}"></span>)</h2>
-                <p>合計勉強時間：<span th:text="${totalHms}"></span></p>
+        <h2>今日(<span th:text="${today}"></span>)</h2>
+        <p>合計勉強時間：<span th:text="${totalHms}"></span></p>
 
-                <hr>
+        <hr>
 
-                <h2>タイマー</h2>
-                <p id="timer">0:00:00</p>
-                <div class="timer-actions">
-                    <button type="button" onclick="startTimer()">開始</button>
-                    <button type="button" onclick="stopTimer()">停止</button>
-                </div>
-
-                <h2>ログ登録</h2>
-                <form th:action="@{/home/log}" th:object="${studyLog}" method="post">
-                    <input type="hidden" th:field="*{studyDate}">
-                    <input type="hidden" th:field="*{minutes}" id="minutesInput">
-                    <input type="hidden" th:field="*{seconds}" id="secondsInput">
-
-                    <div>
-                        <label>科目</label>
-                        <input type="text" th:field="*{subject}" list="subjectList">
-
-                        <datalist id="subjectList">
-                            <option th:each="s : ${subjects}" th:value="${s}"></option>
-                        </datalist>
-
-                        <div th:if="${#fields.hasErrors('subject')}" th:errors="*{subject}"></div>
-                    </div>
-
-                    <div>
-                        <label>メモ</label>
-                        <textarea th:field="*{memo}" rows="3" cols="40"></textarea>
-                    </div>
-
-                    <p>計測結果(分)：<span id="minutesPreview">0</span></p>
-
-                    <button type="submit">保存</button>
-                </form>
-
-                <hr>
-
-                <h2>今日の科目・内容</h2>
-                <table border="1">
-                    <thead>
-                        <tr>
-                            <th>日付</th>
-                            <th>科目</th>
-                            <th>分</th>
-                            <th>メモ</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr th:each="log : ${todayLogs}">
-                            <td th:text="${log.studyDate}"></td>
-                            <td th:text="${log.subject}"></td>
-                            <td th:text="${log.minutes}"></td>
-                            <td th:text="${log.memo}"></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </main>
-            <aside th:replace="fragments/sidebar :: sidebar"></aside>
+        <h2>タイマー</h2>
+        <p id="timer">0:00:00</p>
+        <div class="timer-actions">
+            <button type="button" onclick="startTimer()">開始</button>
+            <button type="button" onclick="stopTimer()">停止</button>
         </div>
+
+        <h2>ログ登録</h2>
+        <form th:action="@{/home/log}" th:object="${studyLog}" method="post">
+            <input type="hidden" th:field="*{studyDate}">
+            <input type="hidden" th:field="*{minutes}" id="minutesInput">
+            <input type="hidden" th:field="*{seconds}" id="secondsInput">
+
+            <div>
+                <label>科目</label>
+                <input type="text" th:field="*{subject}" list="subjectList" 
+                       th:classappend="${#fields.hasErrors('subject')} ? 'is-invalid' : ''">
+
+                <datalist id="subjectList">
+                    <option th:each="s : ${subjects}" th:value="${s}"></option>
+                </datalist>
+
+                <div class="field-error"
+                     th:if="${#fields.hasErrors('subject')}"
+                     th:errors="*{subject}"></div>
+            </div>
+
+            <div>
+                <label>メモ</label>
+                <textarea th:field="*{memo}" rows="3" cols="40"></textarea>
+            </div>
+
+            <p>計測結果(分)：<span id="minutesPreview">0</span></p>
+
+            <button type="submit">保存</button>
+        </form>
+
+        <hr>
+
+        <h2>今日の科目・内容</h2>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>日付</th>
+                    <th>科目</th>
+                    <th>分</th>
+                    <th>メモ</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="log : ${todayLogs}">
+                    <td th:text="${log.studyDate}"></td>
+                    <td th:text="${log.subject}"></td>
+                    <td th:text="${log.minutes}"></td>
+                    <td th:text="${log.memo}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
+    <th:block th:fragment="scripts">
         <script th:src="@{/js/timer.js}"></script>
-    </body>
+    </th:block>
 </html>
