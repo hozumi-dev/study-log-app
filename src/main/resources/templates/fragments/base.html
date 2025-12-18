@@ -5,6 +5,8 @@
         <title th:text="${title}">studylog</title>
         <link rel="stylesheet" th:href="@{/css/app.css}">
         <link rel="stylesheet" th:href="@{/css/sidebar.css}">
+        <link rel="manifest" th:href="@{manifest.webmanifest}">
+        <meta name="theme-color" content="#f6f7fb">
     </head>
     <body>
         <div class="layout">
@@ -14,5 +16,7 @@
             <aside th:replace="fragments/sidebar :: sidebar"></aside>
         </div>
         <th:block th:if="${scripts != null}" th:replace="${scripts}"></th:block>
+
+        <script th:src="@{/js/sw-register.js}"></script>
     </body>
 </html>
