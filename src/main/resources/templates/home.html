@@ -3,69 +3,73 @@
     <main>
         <h1>Home</h1>
 
-        <h2>今日(<span th:text="${today}"></span>)</h2>
-        <p>合計勉強時間：<span th:text="${totalHms}"></span></p>
+        <section class="card">
+            <h2>今日(<span th:text="${today}"></span>)</h2>
+            <p>合計勉強時間：<span th:text="${totalHms}"></span></p>
+        </section>
 
-        <hr>
-
-        <h2>タイマー</h2>
-        <p id="timer">0:00:00</p>
-        <div class="timer-actions">
-            <button type="button" onclick="startTimer()">開始</button>
-            <button type="button" onclick="stopTimer()">停止</button>
-        </div>
-
-        <h2>ログ登録</h2>
-        <form th:action="@{/home/log}" th:object="${studyLog}" method="post">
-            <input type="hidden" th:field="*{studyDate}">
-            <input type="hidden" th:field="*{minutes}" id="minutesInput">
-            <input type="hidden" th:field="*{seconds}" id="secondsInput">
-
-            <div>
-                <label>科目</label>
-                <input type="text" th:field="*{subject}" list="subjectList" 
-                       th:classappend="${#fields.hasErrors('subject')} ? 'is-invalid' : ''">
-
-                <datalist id="subjectList">
-                    <option th:each="s : ${subjects}" th:value="${s}"></option>
-                </datalist>
-
-                <div class="field-error"
-                     th:if="${#fields.hasErrors('subject')}"
-                     th:errors="*{subject}"></div>
+        <section class="card">
+            <h2>タイマー</h2>
+            <p id="timer">0:00:00</p>
+            <div class="timer-actions">
+                <button type="button" onclick="startTimer()">開始</button>
+                <button type="button" onclick="stopTimer()">停止</button>
             </div>
+        </section>
 
-            <div>
-                <label>メモ</label>
-                <textarea th:field="*{memo}" rows="3" cols="40"></textarea>
-            </div>
+        <section class="card">
+            <h2>ログ登録</h2>
+            <form th:action="@{/home/log}" th:object="${studyLog}" method="post">
+                <input type="hidden" th:field="*{studyDate}">
+                <input type="hidden" th:field="*{minutes}" id="minutesInput">
+                <input type="hidden" th:field="*{seconds}" id="secondsInput">
 
-            <p>計測結果(分)：<span id="minutesPreview">0</span></p>
+                <div>
+                    <label>科目</label>
+                    <input type="text" th:field="*{subject}" list="subjectList" 
+                        th:classappend="${#fields.hasErrors('subject')} ? 'is-invalid' : ''">
 
-            <button type="submit">保存</button>
-        </form>
+                    <datalist id="subjectList">
+                        <option th:each="s : ${subjects}" th:value="${s}"></option>
+                    </datalist>
 
-        <hr>
+                    <div class="field-error"
+                        th:if="${#fields.hasErrors('subject')}"
+                        th:errors="*{subject}"></div>
+                </div>
 
-        <h2>今日の科目・内容</h2>
-        <table border="1">
-            <thead>
-                <tr>
-                    <th>日付</th>
-                    <th>科目</th>
-                    <th>分</th>
-                    <th>メモ</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr th:each="log : ${todayLogs}">
-                    <td th:text="${log.studyDate}"></td>
-                    <td th:text="${log.subject}"></td>
-                    <td th:text="${log.minutes}"></td>
-                    <td th:text="${log.memo}"></td>
-                </tr>
-            </tbody>
-        </table>
+                <div>
+                    <label>メモ</label>
+                    <textarea th:field="*{memo}" rows="3" cols="40"></textarea>
+                </div>
+
+                <p>計測結果(分)：<span id="minutesPreview">0</span></p>
+
+                <button type="submit">保存</button>
+            </form>
+        </section>
+
+        <section class="today-section">
+            <h2>今日の科目・内容</h2>
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>日付</th>
+                        <th>科目</th>
+                        <th>分</th>
+                        <th>メモ</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="log : ${todayLogs}">
+                        <td th:text="${log.studyDate}"></td>
+                        <td th:text="${log.subject}"></td>
+                        <td th:text="${log.minutes}"></td>
+                        <td th:text="${log.memo}"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
     </main>
     <th:block th:fragment="scripts">
         <script th:src="@{/js/timer.js}"></script>

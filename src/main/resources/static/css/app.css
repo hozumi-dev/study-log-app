@@ -133,3 +133,75 @@ th{
 input.is-invalid, textarea.is-invalid, select.is-invalid{
     border-color: red;
 }
+
+@media (max-width: 768px){
+  .layout{
+    flex-direction: column;
+    gap: 12px;
+    margin: 12px auto;
+    padding: 0 12px;
+  }
+  
+  .content{
+    padding: 12px;
+  }
+  .card{
+    padding: 12px;
+    margin: 10px 0;
+  }
+
+  h1{
+    font-size: 22px;
+    margin: 0 0 10px;
+  }
+
+  h2{
+    font-size: 16px;
+    margin: 0 0 8px;
+  }
+
+  hr{
+    margin: 10px 0;
+  }
+
+  .field{
+    margin: 8px 0;
+  }
+
+  label{
+    margin-bottom: 4px;
+  }
+
+  .sidebar{
+    display: none;
+  }
+
+  #timer{
+    font-size: 36px;
+  }
+
+  .btn-row .btn{
+    flex: 1;
+    padding: 12px 14px;
+  }
+
+  input, textarea, select{
+    font-size: 16px;
+  }
+
+  .table-wrap{
+    overflow-x: auto;
+  }
+
+  table{
+    min-width: 600px;
+  }
+}
+
+.today-section{
+    display: none;
+}
+
+.timer-action .btn{
+    flex: 1;
+}

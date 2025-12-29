@@ -36,6 +36,7 @@ self.addEventListener("activate", (event) => {
 });
 
 self.addEventListener("fetch", (event) => {
+    if(event.request.method !== "GET") return;
     const req = event.request;
     const url = new URL(req.url);
 
@@ -53,7 +54,7 @@ self.addEventListener("fetch", (event) => {
             })
             .catch(async () =>  {
                 const cached = await caches.match(req);
-                return cached || (await caches.match("/")) || (await caches.match("/offline.html"));
+                return cached || (await caches.match("/offline.html"));
             })
         );
         return;
