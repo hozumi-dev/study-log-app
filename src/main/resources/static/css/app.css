@@ -75,11 +75,30 @@ h2{
 }
 
 .btn{
-    border: 1px solid var(--border);
-    background: #fff;
-    padding: 10px 14px;
-    border-radius: 10px;
-    cursor: pointer;
+    min-height: 44px;
+    font-size: 16px;
+    font-weight: 700;
+    border-radius: 12px;
+}
+
+.btn-start{
+    background: #22c55e;
+    border: 1px solid #22c55e;
+    color: #fff;
+}
+
+.btn-stop{
+    background: #ef4444;
+    border: 1px solid #22c55e;
+    color: #fff;
+}
+
+.btn-save{
+    width: 100%;
+    background: #2563ed;
+    border: 1px solid #2563ed;
+    color: #fff;
+    margin-top: 12px;
 }
 
 .btn:hover{ filter: brightness(0.98); }
