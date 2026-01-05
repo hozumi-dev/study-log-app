@@ -1,11 +1,13 @@
 <html xmlns:th="http://www.thymeleaf.org"
       th:replace="fragments/base :: layout('Home', ~{::main}, ~{::scripts})">
     <main>
+        <input type="hidden" id="todayValue" th:value="${today}">
+
         <h1>Home</h1>
 
         <section class="card">
             <h2>今日(<span th:text="${today}"></span>)</h2>
-            <p>合計勉強時間：<span th:text="${totalHms}"></span></p>
+            <p>合計勉強時間：<span id="totalHms" th:text="${totalHms}"></span></p>
         </section>
 
         <section class="card">
@@ -19,7 +21,7 @@
 
         <section class="card">
             <h2>ログ登録</h2>
-            <form th:action="@{/home/log}" th:object="${studyLog}" method="post">
+            <form id="logForm" th:action="@{/home/log}" th:object="${studyLog}" method="post">
                 <input type="hidden" th:field="*{studyDate}">
                 <input type="hidden" th:field="*{minutes}" id="minutesInput">
                 <input type="hidden" th:field="*{seconds}" id="secondsInput">
@@ -60,7 +62,7 @@
                         <th>メモ</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="todayLogsBody">
                     <tr th:each="log : ${todayLogs}">
                         <td th:text="${log.studyDate}"></td>
                         <td th:text="${log.subject}"></td>
@@ -73,5 +75,6 @@
     </main>
     <th:block th:fragment="scripts">
         <script th:src="@{/js/timer.js}"></script>
+        <script type="module" th:src="@{/js/home-local.js}"></script>
     </th:block>
 </html>
